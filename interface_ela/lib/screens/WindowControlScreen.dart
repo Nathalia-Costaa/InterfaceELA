@@ -1,5 +1,7 @@
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:interface_ela/utils/telegram_api.dart';
 
 class WindowControlScreen extends StatelessWidget {
   @override
@@ -102,6 +104,14 @@ class WindowControlScreen extends StatelessWidget {
           shape: CircleBorder(),
         ),
         onPressed: () {
+          Dio().post(
+            'https://api.telegram.org/bot6334207205:AAGGcuCd5sugzasJQEfHzbCIWZmi02sK6JA/sendMessage',
+            data: {
+              'chat_id': '5516338034',
+              'text': 'Preciso de ajuda'
+            }
+          );
+          TelegramAPI.sendMessage('Socorro');
           if (text == 'EMERGENCIA') {
             showDialog(
               context: context,
