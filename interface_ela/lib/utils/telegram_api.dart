@@ -19,7 +19,7 @@ class TelegramAPI {
     );
   }
 
-  static Future<void> sendMessage2(String text) async {
+  static Future<bool> sendMessageGroup(String text) async {
     final response = await http.post(
       Uri.parse(sendMessageApiEndPoint),
       headers: {'Content-Type': 'application/json'},
@@ -28,11 +28,30 @@ class TelegramAPI {
         'text': text,
       }),
     );
-
     if (response.statusCode == 200) {
       print('Mensagem enviada com sucesso!');
+      return true;
     } else {
       print('Falha ao enviar mensagem: ${response.body}');
+      return false;
+    }
+  }
+
+  static Future<bool> sendMessageCaretaker(String text) async {
+    final response = await http.post(
+      Uri.parse(sendMessageApiEndPoint),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'chat_id': '5516338034',
+        'text': text,
+      }),
+    );
+    if (response.statusCode == 200) {
+      print('Mensagem enviada com sucesso!');
+      return true;
+    } else {
+      print('Falha ao enviar mensagem: ${response.body}');
+      return false;
     }
   }
 

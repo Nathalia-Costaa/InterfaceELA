@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:interface_ela/utils/telegram_api.dart';
 
 import 'CommunicatorScreen.dart';
 import 'EmergencyMessagesScreen.dart';
@@ -98,24 +99,19 @@ Widget buildCircularButton(String text, BuildContext context, {double diameter =
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
       ),
-      onPressed: () {
-        if (text == 'EMERGENCIA') {
-          showEmergencyDialog(context);
-        }
-        // Sempre chama handleButtonPress, mesmo para EMERGENCIA
-        handleButtonPress(text, context);
-      },
+      onPressed: () => handleButtonPress(text, context),
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
     ),
   );
 }
 
+//ToDo: colocar os cases das mensagens rápidas
 void handleButtonPress(String text, BuildContext context) {
   switch (text) {
     case 'ABRIR JANELAS':
@@ -137,7 +133,11 @@ void handleButtonPress(String text, BuildContext context) {
       );
       break;
     case 'EMERGENCIA':
-      showEmergencyDialog(context);
+      TelegramAPI.sendMessageGroup('----- Preciso de ajuda, emergencia!!! -----').then((success) {
+        if (success) {
+          showEmergencyDialog(context);
+        }
+      });
       break;
     case 'MENSAGENS RÁPIDAS':
       Navigator.push(
@@ -170,7 +170,7 @@ void showEmergencyDialog(BuildContext context) {
         content: Container(
           width: double.maxFinite,
           padding: EdgeInsets.all(20.0),
-          child: Column(
+          child: const Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
