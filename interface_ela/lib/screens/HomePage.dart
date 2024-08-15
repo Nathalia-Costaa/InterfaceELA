@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
 import 'CommunicatorScreen.dart';
+import 'EmergencyMessagesScreen.dart';
+import 'QuickMessagesScreen.dart';
+import 'SettingsScreen.dart';
 import 'WindowControlScreen.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Página inicial'),
+        title: Text('Página inicial'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(
@@ -26,212 +29,174 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Primeira coluna
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildButton('ABRIR JANELA', context),
-                  buildButton('CONTROLE DE LUZ', context),
-                  buildButton('ABRIR JANELA', context),
-                  buildButton('LIGAR AR CONDICIONADO', context),
-                  buildButton('LIGAR VENTILADOR', context),
-                ],
-              ),
-              // Segunda coluna
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildMessageButton('ESTOU BEM', context),
-                  buildMessageButton('ESTOU COM FOME', context),
-                  buildMessageButton('ESTOU COM DOR', context),
-                  buildButton('COMUNICADOR', context),
-                  buildButton('ENTRETENIMENTO', context),
-                ],
-              ),
-              // Terceira coluna
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildButton('CONFIGURAÇÕES', context, width: 400),
-                  buildCircularButton(
-                    'EMERGENCIA',
-                    diameter: 300,
-                    color: Colors.red,
-                    context: context,
-                  ),
-                ],
-              ),
+              buildButtonColumn(context, [
+                'ABRIR JANELAS',
+                'CONTROLE DE LUZ',
+                'LIGAR AR CONDICIONADO'
+              ]),
+              buildButtonColumn(context, [
+                'LIGAR VENTILADOR',
+                'COMUNICADOR',
+                'ENTRETENIMENTO'
+              ]),
+              buildButtonColumn(context, [
+                'CONFIGURAÇÕES',
+                'EMERGENCIA'
+              ], isCircular: true, colors: [Colors.blue, Colors.red])
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget buildButton(String text, BuildContext context, {double width = 300, double height = 100, Color color = Colors.purple}) {
-    return Container(
-      width: width,
-      height: height,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          padding: EdgeInsets.symmetric(vertical: 30),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100.0),
+Widget buildButtonColumn(BuildContext context, List<String> labels, {bool isCircular = false, List<Color>? colors}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: labels.asMap().entries.map((entry) {
+      int index = entry.key;
+      String label = entry.value;
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: isCircular
+              ? buildCircularButton(label, context, color: colors?[index] ?? Colors.red)
+              : buildButton(label, context),
+        ),
+      );
+    }).toList(),
+  );
+}
+
+Widget buildButton(String text, BuildContext context, {double width = 400, double height = 75, Color color = Colors.purple}) {
+  return SizedBox(
+    width: width,
+    height: height,
+    child: ElevatedButton(
+      onPressed: () => handleButtonPress(text, context),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.white, fontSize: 18),
+      ),
+    ),
+  );
+}
+
+
+Widget buildCircularButton(String text, BuildContext context, {double diameter = 200, Color color = Colors.red}) {
+  return Container(
+    width: diameter,
+    height: diameter,
+    margin: const EdgeInsets.symmetric(vertical: 8.0),
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        shape: CircleBorder(),
+      ),
+      onPressed: () {
+        if (text == 'EMERGENCIA') {
+          showEmergencyDialog(context);
+        }
+        // Sempre chama handleButtonPress, mesmo para EMERGENCIA
+        handleButtonPress(text, context);
+      },
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white, fontSize: 16),
+      ),
+    ),
+  );
+}
+
+void handleButtonPress(String text, BuildContext context) {
+  switch (text) {
+    case 'ABRIR JANELAS':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const WindowControlScreen()),
+      );
+      break;
+    case 'COMUNICADOR':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CommunicatorScreen()),
+      );
+      break;
+    case 'CONFIGURAÇÕES COMUNICADOR':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SettingsScreen()),
+      );
+      break;
+    case 'EMERGENCIA':
+      showEmergencyDialog(context);
+      break;
+    case 'MENSAGENS RÁPIDAS':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const QuickMessagesScreen()),
+      );
+      break;
+    case 'MENSAGENS DE EMERGÊNCIA':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const EmergencyMessagesScreen()),
+      );
+      break;
+    default:
+    // Lógica padrão, se necessário
+      break;
+  }
+}
+
+
+void showEmergencyDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.purple.withOpacity(0.8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        content: Container(
+          width: double.maxFinite,
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'PEDIDO DE AJUDA',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'ENVIADO',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
-        onPressed: () {
-          if (text == 'ABRIR JANELA') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => WindowControlScreen()),
-            );
-          } else if (text == 'COMUNICADOR') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CommunicatorScreen()),
-            );
-          } else if (text == 'CONFIGURACAO') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ConfiguracaoScreen()),
-            );
-          }
-          // Handle other button presses here
-        },
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
-
-  Widget buildMessageButton(String text, BuildContext context, {double width = 300, double height = 100, Color color = Colors.purple}) {
-    return Container(
-      width: width,
-      height: height,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          padding: EdgeInsets.symmetric(vertical: 30),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100.0),
-          ),
-        ),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: Colors.purple.withOpacity(0.8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                content: Container(
-                  width: double.maxFinite,
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'MENSAGEM ENVIADA',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
-
-  Widget buildCircularButton(String text, {double diameter = 200, Color color = Colors.red, context}) {
-    return Container(
-      width: diameter,
-      height: diameter,
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          shape: CircleBorder(),
-        ),
-        onPressed: () {
-          if (text == 'EMERGENCIA') {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.purple.withOpacity(0.8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                  content: Container(
-                    width: double.maxFinite,
-                    padding: EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'PEDIDO DE AJUDA',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'ENVIADO',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-        },
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
+      );
+    },
+  );
 }

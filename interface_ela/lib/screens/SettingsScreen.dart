@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'HomePage.dart';
 
-class CommunicatorScreen extends StatelessWidget {
-  const CommunicatorScreen({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comunicador'),
+        title: Text('Configurações do Comunicador'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(
@@ -28,19 +28,14 @@ class CommunicatorScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               buildButtonColumn(context, [
-                'ESTOU BEM',
-                'ESTOU COM FOME',
-                'ESTOU COM DOR'
+                'MENSAGENS RÁPIDAS'
               ]),
               buildButtonColumn(context, [
-                'CHAMAR AJUDA',
-                'PRECISO DE COMPANHIA',
-                'PRECISO DE MEDICAMENTO'
+                'MENSAGENS DE EMERGÊNCIA'
               ]),
               buildButtonColumn(context, [
-                'CONFIGURAÇÕES COMUNICADOR',
                 'EMERGENCIA'
-              ], isCircular: true, colors: [Colors.blue, Colors.red])
+              ], isCircular: true, colors: [Colors.red])
             ],
           ),
         ),
