@@ -104,13 +104,6 @@ class WindowControlScreen extends StatelessWidget {
           shape: CircleBorder(),
         ),
         onPressed: () {
-          Dio().post(
-            'https://api.telegram.org/bot6334207205:AAGGcuCd5sugzasJQEfHzbCIWZmi02sK6JA/sendMessage',
-            data: {
-              'chat_id': '5516338034',
-              'text': 'Preciso de ajuda'
-            }
-          );
           TelegramAPI.sendMessage('Socorro');
           if (text == 'EMERGENCIA') {
             showDialog(
@@ -124,7 +117,7 @@ class WindowControlScreen extends StatelessWidget {
                   content: Container(
                     width: double.maxFinite,
                     padding: EdgeInsets.all(20.0),
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

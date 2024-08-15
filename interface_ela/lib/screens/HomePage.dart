@@ -92,6 +92,11 @@ class HomePage extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => CommunicatorScreen()),
             );
+          } else if (text == 'CONFIGURACAO') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ConfiguracaoScreen()),
+            );
           }
           // Handle other button presses here
         },
