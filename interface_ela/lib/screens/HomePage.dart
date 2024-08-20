@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:interface_ela/screens/showMessageSend.dart';
 import 'package:interface_ela/utils/telegram_api.dart';
 
 import 'CommunicatorScreen.dart';
-import 'EmergencyMessagesScreen.dart';
-import 'QuickMessagesScreen.dart';
+import 'EmergencyMessagesSetup.dart';
+import 'MessageContactsSetup.dart';
 import 'SettingsScreen.dart';
 import 'WindowControlScreen.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +114,6 @@ Widget buildCircularButton(String text, BuildContext context, {double diameter =
   );
 }
 
-//ToDo: colocar os cases das mensagens rápidas
 void handleButtonPress(String text, BuildContext context) {
   switch (text) {
     case 'ABRIR JANELAS':
@@ -142,13 +144,61 @@ void handleButtonPress(String text, BuildContext context) {
     case 'MENSAGENS RÁPIDAS':
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const QuickMessagesScreen()),
+        MaterialPageRoute(builder: (context) => const MessageContactsSetup()),
       );
+      break;
+    case 'ESTOU COM FOME':
+      TelegramAPI.sendMessageCaretaker("Estou com fome").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
+      break;
+    case 'ESTOU BEM':
+      TelegramAPI.sendMessageCaretaker("Estou bem").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
+      break;
+    case 'ESTOU COM DOR':
+      TelegramAPI.sendMessageCaretaker("Estou com dor").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
+      break;
+    case 'PRECISO DE AJUDA':
+      TelegramAPI.sendMessageCaretaker("Preciso de ajuda").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
+      break;
+    case 'PRECISO DE COMPANHIA':
+      TelegramAPI.sendMessageCaretaker("Preciso de companhia").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
+      break;
+    case 'PRECISO DE MEDICAMENTO':
+      TelegramAPI.sendMessageCaretaker("Preciso de medicamentos").then((success){
+        if (success){
+          showMessageSend(context);
+        }
+      });
       break;
     case 'MENSAGENS DE EMERGÊNCIA':
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const EmergencyMessagesScreen()),
+        MaterialPageRoute(builder: (context) => const EmergencyMessagesSetup()),
+      );
+      break;
+    case 'MENSAGENS RAPIDAS':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MessageContactsSetup()),
       );
       break;
     default:

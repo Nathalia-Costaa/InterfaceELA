@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class EmergencyMessagesScreen extends StatelessWidget {
-  const EmergencyMessagesScreen({super.key});
+class MessageContactsSetup extends StatelessWidget {
+  const MessageContactsSetup({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mensagens de Emergência'),
+        title: const Text('Mensagens Rápidas'),
         backgroundColor: Colors.deepOrange,
       ),
       body: const Center(
-        child: Text('Conteúdo de Mensagens de Emergência'),
+        child: Text('Conteúdo de Mensagens Rápidas'),
       ),
     );
   }

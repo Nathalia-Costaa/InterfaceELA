@@ -33,7 +33,7 @@ class CommunicatorScreen extends StatelessWidget {
                 'ESTOU COM DOR'
               ]),
               buildButtonColumn(context, [
-                'CHAMAR AJUDA',
+                'PRECISO DE AJUDA',
                 'PRECISO DE COMPANHIA',
                 'PRECISO DE MEDICAMENTO'
               ]),
