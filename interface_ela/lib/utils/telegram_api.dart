@@ -54,27 +54,4 @@ class TelegramAPI {
       return false;
     }
   }
-
-  void getUpdates() async {
-    final response = await http.get(
-      Uri.parse(getUpdatesApiEndPoint),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      List<int> chatIds = [];
-
-      for (var result in data['result']) {
-        final chatId = result['message']['chat']['id'];
-        if (!chatIds.contains(chatId)) {
-          chatIds.add(chatId);
-        }
-      }
-
-      print('IDs dos Chats: $chatIds');
-    } else {
-      print('Falha ao obter atualizações: ${response.statusCode}');
-    }
-  }
-
 }
