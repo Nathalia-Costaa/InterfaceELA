@@ -190,6 +190,7 @@ void handleButtonPress(String text, BuildContext context) {
       });
       break;
     case 'MENSAGENS DE EMERGÊNCIA':
+      TelegramAPI.fetchTelegramMentions();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const EmergencyMessagesSetup()),
@@ -197,6 +198,7 @@ void handleButtonPress(String text, BuildContext context) {
 
       break;
     case 'MENSAGENS RAPIDAS':
+      TelegramAPI.fetchTelegramMentions();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const MessageContactsSetup()),
