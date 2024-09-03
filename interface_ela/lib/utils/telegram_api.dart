@@ -3,11 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class TelegramAPI {
+  Map<String, String> _userConversationMap = {};
   static String botToken = '6334207205:AAGGcuCd5sugzasJQEfHzbCIWZmi02sK6JA';
 
   static get baseUrl => 'https://api.telegram.org/bot$botToken';
   static get sendMessageApiEndPoint => '$baseUrl/sendMessage';
-  static get getUpdatesApiEndPoint => '$baseUrl/getUpdates';
+  static get url => '$baseUrl/getUpdates';
 
   static void sendMessage(String message) {
     Dio().post(
@@ -52,6 +53,29 @@ class TelegramAPI {
     } else {
       print('Falha ao enviar mensagem: ${response.body}');
       return false;
+    }
+  }
+
+  Future<void> _fetchTelegramMentions() async {
+    final url = 'https://api.telegram.org/bot6334207205:AAGGcuCd5sugzasJQEfHzbCIWZmi02sK6JA/getUpdates';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body)['result'];
+      print(data);
+      setState(() {
+        _userConversationMap = {
+          for (var update in data)
+            if (update['message'] != null)
+              update['message']['chat']['first_name'] ??
+                  update['message']['chat']['title'] ?? 'Desconhecido':
+              update['message']['chat']['id'].toString()
+        };
+      });
+      print(_userConversationMap);
+    } else {
+      // Trate o erro
+      print('Erro ao carregar as conversas');
     }
   }
 }

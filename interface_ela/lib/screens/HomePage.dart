@@ -190,7 +190,6 @@ void handleButtonPress(String text, BuildContext context) {
       });
       break;
     case 'MENSAGENS DE EMERGÊNCIA':
-      TelegramAPI.getUpdatesApiEndPoint();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const EmergencyMessagesSetup()),
