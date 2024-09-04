@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página inicial'),
+        title: const Text('Página inicial'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(
@@ -87,7 +87,7 @@ Widget buildButton(String text, BuildContext context, {double width = 400, doubl
       ),
       child: Text(
         text,
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: const TextStyle(color: Colors.white, fontSize: 18),
       ),
     ),
   );
@@ -222,7 +222,7 @@ void showEmergencyDialog(BuildContext context) {
         ),
         content: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

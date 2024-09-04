@@ -12,7 +12,7 @@ void showMessageSend(BuildContext context) {
         ),
         content: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -10,7 +10,7 @@ class CommunicatorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comunicador'),
+        title: const Text('Comunicador'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(

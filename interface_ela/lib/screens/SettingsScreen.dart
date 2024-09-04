@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configurações do Comunicador'),
+        title: const Text('Configurações do Comunicador'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(

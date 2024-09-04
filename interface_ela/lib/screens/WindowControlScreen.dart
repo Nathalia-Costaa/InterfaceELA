@@ -10,7 +10,7 @@ class WindowControlScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Janelas'),
+        title: const Text('Janelas'),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(

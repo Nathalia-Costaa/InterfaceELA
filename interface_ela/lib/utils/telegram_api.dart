@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:interface_ela/screens/MessageContactsSetup.dart';
 
 class TelegramAPI {
   static String? caretakerId;
