@@ -40,7 +40,7 @@ class WindowControlScreen extends StatelessWidget {
                 'PÁGINA INICIAL',
                 'CONFIGURAÇÕES',
                 'EMERGENCIA',
-              ], isCircular: true, colors: [Colors.orange, Colors.blue, Colors.red])
+              ], isCircular: true, colors: [Colors.yellow, Colors.blue, Colors.red])
             ],
           ),
         ),

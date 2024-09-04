@@ -38,9 +38,11 @@ class CommunicatorScreen extends StatelessWidget {
                 'PRECISO DE MEDICAMENTO'
               ]),
               buildButtonColumn(context, [
-                'CONFIGURAÇÕES COMUNICADOR',
+                'PÁGINA INICIAL',
+                'CONFIGURAÇÕES\n'
+                'COMUNICADOR',
                 'EMERGENCIA'
-              ], isCircular: true, colors: [Colors.blue, Colors.red])
+              ], isCircular: true, colors: [Colors.yellow, Colors.blue, Colors.red])
             ],
           ),
         ),

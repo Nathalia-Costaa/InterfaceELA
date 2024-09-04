@@ -94,7 +94,7 @@ Widget buildButton(String text, BuildContext context, {double width = 400, doubl
 }
 
 
-Widget buildCircularButton(String text, BuildContext context, {double diameter = 200, Color color = Colors.red}) {
+Widget buildCircularButton(String text, BuildContext context, {double diameter = 400, Color color = Colors.red}) {
   return Container(
     width: diameter,
     height: diameter,
@@ -128,7 +128,7 @@ void handleButtonPress(String text, BuildContext context) {
         MaterialPageRoute(builder: (context) => const CommunicatorScreen()),
       );
       break;
-    case 'CONFIGURAÇÕES COMUNICADOR':
+    case 'CONFIGURAÇÕES\n' 'COMUNICADOR':
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const SettingsScreen()),
@@ -204,6 +204,11 @@ void handleButtonPress(String text, BuildContext context) {
         MaterialPageRoute(builder: (context) => const MessageContactsSetup()),
       );
       break;
+    case 'PÁGINA INICIAL':
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     default:
     // Lógica padrão, se necessário
       break;
@@ -211,10 +216,15 @@ void handleButtonPress(String text, BuildContext context) {
 }
 
 
-void showEmergencyDialog(BuildContext context) {
+void showEmergencyDialog(BuildContext context) { // caixa de emergencia
   showDialog(
     context: context,
     builder: (BuildContext context) {
+      // Define a Future para fechar o diálogo após 2 segundos
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.of(context).pop(true);
+      });
+
       return AlertDialog(
         backgroundColor: Colors.purple.withOpacity(0.8),
         shape: RoundedRectangleBorder(
