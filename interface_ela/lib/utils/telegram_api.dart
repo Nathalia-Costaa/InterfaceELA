@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class TelegramAPI {
   static String? caretakerId;
-  static String? groupId;
+  static String? groupId = '-4224483795';
 
   static String botToken = '6334207205:AAGGcuCd5sugzasJQEfHzbCIWZmi02sK6JA';
 

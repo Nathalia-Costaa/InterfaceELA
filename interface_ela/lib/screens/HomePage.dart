@@ -135,6 +135,7 @@ void handleButtonPress(String text, BuildContext context) {
       );
       break;
     case 'EMERGENCIA':
+      print("Rodando");
       TelegramAPI.sendMessageGroup('----- Preciso de ajuda, emergencia!!! -----').then((success) {
         if (success) {
           showEmergencyDialog(context);

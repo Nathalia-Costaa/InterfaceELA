@@ -34,6 +34,8 @@ Widget build(BuildContext context) {
       backgroundColor: Colors.deepOrange,
     ),
     body: Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.purple, Colors.red],
@@ -44,6 +46,7 @@ Widget build(BuildContext context) {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView.builder(
+          shrinkWrap: true,
           itemCount: map.length,  // 'map' é uma lista de MapEntry
           itemBuilder: (BuildContext context, int index) {
             final entry = map[index];  // Acessando diretamente a lista de MapEntry
